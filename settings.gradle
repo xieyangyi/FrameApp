@@ -1,1 +1,4 @@
 include ':app'
+include ':framesdk'
+
+project(':framesdk').projectDir = new File('../FrameSdk/app/')
