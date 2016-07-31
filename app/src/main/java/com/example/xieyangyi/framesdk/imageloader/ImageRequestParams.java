@@ -1,10 +1,9 @@
 package com.example.xieyangyi.framesdk.imageloader;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.widget.ImageView;
-
-import com.example.xieyangyi.framesdk.R;
 
 import java.io.File;
 
@@ -33,15 +32,6 @@ public class ImageRequestParams {
     public static final int LARGER_SIZE = 6;
     public static final int FIT_LARGE_SIZE = 7;
     public static final int FIT_LARGER_SIZE = 8;
-    //placeholder, need to set by customer
-//    public static final int PLACEHOLDER_MICRO = R.drawable.img_loading_xsmall;
-//    public static final int PLACEHOLDER_SMALL = R.drawable.img_loading_small;
-//    public static final int PLACEHOLDER_MIDDLE = R.drawable.img_loading_middle;
-//    public static final int PLACEHOLDER_LARGE = R.drawable.img_loading_large;
-    public static final int PLACEHOLDER_MICRO = R.mipmap.ic_launcher;
-    public static final int PLACEHOLDER_SMALL = R.mipmap.ic_launcher;
-    public static final int PLACEHOLDER_MIDDLE = R.mipmap.ic_launcher;
-    public static final int PLACEHOLDER_LARGE = R.mipmap.ic_launcher;
 
     public static final int LOAD_IMG_URL = 0;
     public static final int LOAD_IMG_FILE = 1;
@@ -62,7 +52,12 @@ public class ImageRequestParams {
 
     public int requestType = GET_BITMAP;
 
-    public int placeholder = PLACEHOLDER_MICRO;
+    public int placeholder;
+    public static int placeHolderMicro;
+    public static int placeHolderSmall;
+    public static int placeHolderMiddle;
+    public static int placeHolderLarge;
+    
     public int error = Integer.MIN_VALUE;
 
     public boolean skipMemoryCache = false;
@@ -81,5 +76,11 @@ public class ImageRequestParams {
 
     public ImageView imageView;
 
-
+    public ImageRequestParams(Context context) {
+        placeHolderMicro = ImageCfg.getInstance(context).getMicroPlaceHolder();
+        placeHolderSmall = ImageCfg.getInstance(context).getSmallPlaceHolder();
+        placeHolderMiddle = ImageCfg.getInstance(context).getMiddlePlaceHolder();
+        placeHolderLarge = ImageCfg.getInstance(context).getLargePlaceHolder();
+        placeholder = placeHolderMicro;
+    }
 }

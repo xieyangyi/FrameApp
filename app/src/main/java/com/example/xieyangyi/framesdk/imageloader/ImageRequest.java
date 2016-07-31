@@ -33,13 +33,13 @@ public class ImageRequest implements ImageRequestDelegate {
     private ImageRequest(Context context, ImageRequestParams params) {
         mContext = context;
         P = params;
-        IMPL = ImageRequestFactory.create();
+        IMPL = ImageRequestFactory.create(context);
     }
 
     private ImageRequest(Fragment fragment, ImageRequestParams params) {
         mFragment = fragment;
         P = params;
-        IMPL = ImageRequestFactory.create();
+        IMPL = ImageRequestFactory.create(fragment.getActivity());
     }
 
 
@@ -310,12 +310,12 @@ public class ImageRequest implements ImageRequestDelegate {
 
         public Builder(Context context) {
             mContext = context;
-            P = new ImageRequestParams();
+            P = new ImageRequestParams(context);
         }
 
         public Builder(Fragment fragment) {
             mFragment = fragment;
-            P = new ImageRequestParams();
+            P = new ImageRequestParams(fragment.getActivity());
         }
 
         /**
@@ -700,7 +700,7 @@ public class ImageRequest implements ImageRequestDelegate {
          * @see #noplaceholder()
          */
         public Builder placeholderMicro() {
-            P.placeholder = P.PLACEHOLDER_MICRO;
+            P.placeholder = P.placeHolderMicro;
             return this;
         }
 
@@ -717,7 +717,7 @@ public class ImageRequest implements ImageRequestDelegate {
          * @see #noplaceholder()
          */
         public Builder placeholderSmall() {
-            P.placeholder = P.PLACEHOLDER_SMALL;
+            P.placeholder = P.placeHolderSmall;
             return this;
         }
 
@@ -734,7 +734,7 @@ public class ImageRequest implements ImageRequestDelegate {
          * @see #noplaceholder()
          */
         public Builder placeholderMiddle() {
-            P.placeholder = P.PLACEHOLDER_MIDDLE;
+            P.placeholder = P.placeHolderMiddle;
             return this;
         }
 
@@ -751,7 +751,7 @@ public class ImageRequest implements ImageRequestDelegate {
          * @see #noplaceholder()
          */
         public Builder placeholderLarge() {
-            P.placeholder = P.PLACEHOLDER_LARGE;
+            P.placeholder = P.placeHolderLarge;
             return this;
         }
 
