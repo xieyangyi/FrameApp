@@ -1,6 +1,7 @@
 package com.example.xieyangyi.framesdk.imageloader;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -10,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 public class ImageRequestFactory {
 
     private static final String TAG = "image_request_factory";
-    private static final String GLIDE_CLASS_NAME = "com.example.xieyangyi.framesdk.imageloader.ImageRequestGlide";
+    private static final String GLIDE_CLASS_NAME = "com.example.xieyangyi.glidelib.ImageRequestGlide";
 
     public static ImageRequestImpl create(Context context) {
 
@@ -41,6 +42,7 @@ public class ImageRequestFactory {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            Log.d(TAG, className + "not found");
         }
 
         return impl;
