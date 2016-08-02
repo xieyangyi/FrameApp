@@ -1,7 +1,6 @@
 package com.example.xieyangyi.framesdk.imageloader;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.xieyangyi.framesdk.R;
 import com.example.xieyangyi.framesdk.SdkCfg;
@@ -22,7 +21,6 @@ public class ImageCfg {
     private Context mContext;
     private ImageCfgObject mCfgObject;
 
-    private int mSdkType;
     private int mMicroHolder;
     private int mSmallHolder;
     private int mMiddleHolder;
@@ -32,7 +30,6 @@ public class ImageCfg {
         mContext = context;
         if (SdkCfg.getCfg(mContext) != null) {
             mCfgObject = SdkCfg.getCfg(mContext).imageCfg;
-            setSdkType();
             setMicroPlaceHolder();
             setSmallPlaceHolder();
             setMiddlePlaceHolder();
@@ -51,10 +48,6 @@ public class ImageCfg {
         return sCfg;
     }
 
-    public int getSdkType() {
-        return mSdkType;
-    }
-
     public int getMicroPlaceHolder() {
         return mMicroHolder;
     }
@@ -69,29 +62,6 @@ public class ImageCfg {
 
     public int getLargePlaceHolder() {
         return mLargeHolder;
-    }
-
-    private void setSdkType() {
-
-        if (mCfgObject == null) {
-            mSdkType = LOADER_TYPE_DEFAULT;
-        }
-
-        String sdk = mCfgObject.sdk;
-
-        if (sdk.contains("glide")) {
-            mSdkType = LOADER_TYPE_GLIDE;
-            Log.d(TAG, "imageLoader : glide");
-        } else if (sdk.contains("fresco")) {
-            mSdkType = LOADER_TYPE_FRESCO;
-            Log.d(TAG, "imageLoader : fresco");
-        } else if (sdk.contains("picasso")) {
-            mSdkType = LOADER_TYPE_PICASSO;
-            Log.d(TAG, "imageLoader : picasso");
-        } else {
-            mSdkType = LOADER_TYPE_DEFAULT;
-            Log.d(TAG, "imageLoader : default as glide");
-        }
     }
 
     private int readRes(String res) {

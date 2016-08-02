@@ -111,6 +111,10 @@ public class ImageRequest implements ImageRequestDelegate {
 
     @Override
     public void into(ImageView imageView) {
+        if (IMPL == null) {
+            return;
+        }
+
         P.imageView = imageView;
         process();
         if (DEBUG) {
@@ -126,6 +130,10 @@ public class ImageRequest implements ImageRequestDelegate {
 
     @Override
     public void cache() {
+        if (IMPL == null) {
+            return;
+        }
+
         process();
         if (DEBUG) {
             IMPL.cache(this);
@@ -140,6 +148,10 @@ public class ImageRequest implements ImageRequestDelegate {
 
     @Override
     public Object sync() {
+        if (IMPL == null) {
+            return null;
+        }
+
         if (P.width < 0 || P.height < 0) {
             throw new IllegalStateException("you must call size(int, int) before sync");
         }
@@ -160,6 +172,10 @@ public class ImageRequest implements ImageRequestDelegate {
 
     @Override
     public Object sync4Web() {
+        if (IMPL == null) {
+            return null;
+        }
+
         P.loaderListener = null;
         process();
 
@@ -177,11 +193,17 @@ public class ImageRequest implements ImageRequestDelegate {
 
     @Override
     public void clearMemoryCache() {
+        if (IMPL == null) {
+            return;
+        }
         IMPL.clearMemoryCache(mContext);
     }
 
     @Override
     public void clearDiskCache() {
+        if (IMPL == null) {
+            return;
+        }
         IMPL.clearDiskCache(mContext);
     }
 

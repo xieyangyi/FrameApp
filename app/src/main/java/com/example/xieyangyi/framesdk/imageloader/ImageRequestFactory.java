@@ -11,20 +11,22 @@ import java.lang.reflect.InvocationTargetException;
 public class ImageRequestFactory {
 
     private static final String TAG = "image_request_factory";
-    private static final String GLIDE_CLASS_NAME = "com.example.xieyangyi.glidelib.ImageRequestGlide";
+    private static final String[] CLASS_NAME = new String[] {
+            "com.example.xieyangyi.glidelib.ImageRequestGlide",
+    };
+
 
     public static ImageRequestImpl create(Context context) {
 
-        switch (ImageCfg.getInstance(context).getSdkType()) {
+        ImageRequestImpl impl = null;
 
-            case ImageCfg.LOADER_TYPE_GLIDE:
-                return getImpl(context, GLIDE_CLASS_NAME);
-
-            case ImageCfg.LOADER_TYPE_FRESCO:
-            case ImageCfg.LOADER_TYPE_PICASSO:
-            default:
-                return getImpl(context, GLIDE_CLASS_NAME);
+        for (int i = 0; i < CLASS_NAME.length; i++) {
+            if ((impl = getImpl(context, CLASS_NAME[i])) != null) {
+                return impl;
+            }
         }
+        return impl;
+
     }
 
     private static ImageRequestImpl getImpl(Context context, String className) {
@@ -41,8 +43,8 @@ public class ImageRequestFactory {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
             Log.d(TAG, className + "not found");
+            e.printStackTrace();
         }
 
         return impl;

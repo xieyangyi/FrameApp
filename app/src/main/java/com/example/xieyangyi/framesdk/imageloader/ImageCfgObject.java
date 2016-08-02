@@ -8,10 +8,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class ImageCfgObject {
 
-    @SerializedName("sdk")
-    @Expose
-    public String sdk;
-
     @SerializedName("place_holder_micro")
     @Expose
     public String placeHolderMicro;

@@ -1,6 +1,5 @@
 {
   "image_loader": {
-    "sdk": "com.github.bumptech.glide:glide:3.6.0",
     "place_holder_micro": "ic_brand",
     "place_holder_small": "img_loading_small",
     "place_holder_middle": "img_loading_middle",
