@@ -1,0 +1,13 @@
+
+ext.cfg = [
+        minSdkVersion           : 15,
+        targetSdkVersion        : 23,
+        versionCode             : 1,
+        versionName             : "1.0",
+        compileSdkVersion       : 23,
+        buildToolsVersion       : "23.0.3"
+]
+
+ext.sdk = [
+        [ 'imageLoader', 'com.github.bumptech.glide:glide:3.6.0', [ "glide" : ':glidelib', "picasso" : ':picassolib' ]]
+]

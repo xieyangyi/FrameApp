@@ -1,4 +1,38 @@
 include ':app'
 include ':framesdk'
-
 project(':framesdk').projectDir = new File('../FrameSdk/app/')
+
+apply from: './base.gradle'
+
+gradle.ext {
+    cfg = cfg
+    sdk = sdk
+    findSdk()
+}
+
+def findSdk() {
+    for (List list : gradle.sdk) {
+        println list[0]
+        setCfg(gradle.cfg, list[0], list[1], list[2])
+    }
+}
+
+def setCfg(Map map, String name, String sdk, Map lib) {
+
+    map.put(name, { sdk })
+
+    for (String key : lib.keySet()) {
+        if (sdk.contains(key)) {
+            println key
+            def value = lib.get(key)
+            include value
+            map.put(name + "Lib", { it.project(value) })
+            break
+        }
+    }
+
+}
+
+
+
+
