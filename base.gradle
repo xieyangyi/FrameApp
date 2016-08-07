@@ -9,6 +9,12 @@ ext.cfg = [
 ]
 
 ext.sdk = [
-//        [ 'imageLoader', 'com.github.bumptech.glide:glide:3.6.0', [ "glide" : ':glidelib', "universal" : ':universalimagelib' ]],
-        [ 'imageLoader', 'com.nostra13.universalimageloader:universal-image-loader:1.9.5', [ "glide" : ':glidelib', "universal" : ':universalimagelib' ]]
+        // glide
+        [ 'imageLoader', 'com.github.bumptech.glide:glide:3.6.0', [ "glide" : ':glidelib', "universal" : ':universalimagelib' ]],
+        // universal-imageLoader, 虽然不在maven中，但仍然需要在此处声明它的lib
+//        [ 'imageLoader', 'com.nostra13.universalimageloader:universal-image-loader:1.9.5', [ "glide" : ':glidelib', "universal" : ':universalimagelib' ]],
+
+        // 占位，最后一个
+        null
+
 ]

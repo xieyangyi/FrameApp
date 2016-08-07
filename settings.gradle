@@ -12,12 +12,18 @@ gradle.ext {
 
 def findSdk() {
     for (List list : gradle.sdk) {
+        if (list == null) continue ;
         println list[0]
         setCfg(gradle.cfg, list[0], list[1], list[2])
     }
 }
 
 def setCfg(Map map, String name, String sdk, Map lib) {
+
+    if (name == null || name.equals("")) return;
+
+    // name相同时，以第一次读取的为准
+    if (map.get(name) != null) return;
 
     map.put(name, { sdk })
 
