@@ -13,6 +13,7 @@ public class ImageRequestFactory {
     private static final String TAG = "image_request_factory";
     private static final String[] CLASS_NAME = new String[] {
             "com.example.xieyangyi.glidelib.ImageRequestGlide",
+            "com.example.xieyangyi.universalimagelib.ImageRequestUniversal",
     };
 
 
