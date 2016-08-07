@@ -9,5 +9,6 @@ ext.cfg = [
 ]
 
 ext.sdk = [
-        [ 'imageLoader', 'com.github.bumptech.glide:glide:3.6.0', [ "glide" : ':glidelib', "picasso" : ':picassolib' ]]
+//        [ 'imageLoader', 'com.github.bumptech.glide:glide:3.6.0', [ "glide" : ':glidelib', "universal" : ':universalimagelib' ]],
+        [ 'imageLoader', 'com.nostra13.universalimageloader:universal-image-loader:1.9.5', [ "glide" : ':glidelib', "universal" : ':universalimagelib' ]]
 ]
