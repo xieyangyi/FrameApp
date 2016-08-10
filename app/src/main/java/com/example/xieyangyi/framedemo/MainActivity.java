@@ -1,24 +1,20 @@
 package com.example.xieyangyi.framedemo;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
 
-import com.example.xieyangyi.framesdk.imageloader.ImageLoader;
+import com.example.xieyangyi.framesdk.netloader.NetLoader;
 
+/**
+ * Created by xieyangyi on 16/8/10.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        initViews();
-    }
-
-    private void initViews() {
-        ImageView ivImg = (ImageView) findViewById(R.id.iv_img);
-        String url = "http://b3.hucdn.com/upload/face/1605/11/55695347863284_414x414.jpg";
-        ImageLoader.with(this).load(url).into(ivImg);
+        NetLoader.with(this).url("https://www.baidu.com/").load();
     }
 }

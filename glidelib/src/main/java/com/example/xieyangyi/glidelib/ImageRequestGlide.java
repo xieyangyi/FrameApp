@@ -21,7 +21,7 @@ import com.bumptech.glide.request.target.Target;
 import com.example.xieyangyi.framesdk.imageloader.ImageRequest;
 import com.example.xieyangyi.framesdk.imageloader.ImageRequestImpl;
 import com.example.xieyangyi.framesdk.imageloader.ImageRequestParams;
-import com.example.xieyangyi.framesdk.imageloader.Utils;
+import com.example.xieyangyi.framesdk.Utils;
 
 import java.util.HashMap;
 import java.util.Map;

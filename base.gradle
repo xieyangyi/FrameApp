@@ -14,6 +14,7 @@ ext.sdk = [
         // universal-imageLoader, 虽然不在maven中，但仍然需要在此处声明它的lib
 //        [ 'imageLoader', 'com.nostra13.universalimageloader:universal-image-loader:1.9.5', [ "glide" : ':glidelib', "universal" : ':universalimagelib' ]],
 
+        ['netLoader', 'com.squareup.okhttp:okhttp:2.6.0', ['okhttp' : ':okhttplib']],
         // 占位，最后一个
         null
 
