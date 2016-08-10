@@ -1,4 +1,4 @@
-package com.example.xieyangyi.framesdk.imageloader;
+package com.example.xieyangyi.framesdk;
 
 import android.content.Context;
 
