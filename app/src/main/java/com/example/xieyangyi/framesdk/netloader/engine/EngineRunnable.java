@@ -7,20 +7,18 @@ import com.example.xieyangyi.framesdk.Json.JsonUtil;
 import com.example.xieyangyi.framesdk.netloader.NetRequest;
 import com.google.gson.JsonParseException;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
 
 /**
  * Created by xieyangyi on 16/8/15.
  */
-public abstract class EngineRunnable<T> implements Runnable {
+public class EngineRunnable implements Runnable {
 
-    private final NetRequest request;
-    private final T response;
-    private final Exception exception;
+    protected final NetRequest request;
+    protected final String response;
+    protected final Exception exception;
 
-    public EngineRunnable(NetRequest request, T response, Exception exception) {
+    public EngineRunnable(NetRequest request, String response, Exception exception) {
         this.request = request;
         this.response = response;
         this.exception = exception;
@@ -41,8 +39,6 @@ public abstract class EngineRunnable<T> implements Runnable {
         }
     }
 
-    protected abstract String getResponseString(T response);
-
     private void handleError(Exception exception) {
         request.setStatus(NetRequest.Status.FAILED);
 
@@ -57,55 +53,59 @@ public abstract class EngineRunnable<T> implements Runnable {
 
     private void handleResponse() {
 
-        String responseString = null;
-
         request.setStatus(NetRequest.Status.COMPLETE);
 
-        if(response != null) {
-            responseString = getResponseString(response);
-        }
-
-        if (TextUtils.isEmpty(responseString)) {
+        if (TextUtils.isEmpty(response)) {
             return;
         }
 
-        try {
+        Object result = null;
+        if (request.getJsonClass() == null) {
+            result = response;
+        } else {
             // toJson first
-            Object result = jsonParse(responseString);
-            // listener
-            if (request.getListener() != null) {
-                request.getListener().onSucceed(result);
+            try {
+                result = jsonParse(response, request.getJsonClass());
+            } catch (JsonParseException e) {
+                handleError(e);
             }
-            if (request.getEmptyView() != null) {
-                if (result == null || (result instanceof List && ((List) result).size() == 0)) {
-                    // todo, need to make this logic more correct
-                    request.getEmptyView().setVisibility(View.VISIBLE);
-                    request.getEmptyView().resetAsEmpty();
-                } else {
-                    request.getEmptyView().setVisibility(View.GONE);
-                }
+        }
+
+        if (result == null) {
+            throw new IllegalArgumentException("json result is null");
+        }
+
+        // listener
+        if (request.getListener() != null) {
+            request.getListener().onSucceed(result);
+        }
+        if (request.getEmptyView() != null) {
+            if (result == null || (result instanceof List && ((List) result).size() == 0)) {
+                // todo, need to make this logic more correct
+                request.getEmptyView().setVisibility(View.VISIBLE);
+                request.getEmptyView().resetAsEmpty();
+            } else {
+                request.getEmptyView().setVisibility(View.GONE);
             }
-
-
-        } catch (JsonParseException e) {
-            handleError(e);
         }
     }
 
-    private Object jsonParse(String jsonStr) {
-        Type type = getType();
-        if (type == String.class) {
-            return jsonStr;
-        }
-        return JsonUtil.fromJson(jsonStr, getType());
+    private Object jsonParse(String jsonStr, Class clazz) {
+//        Type type = getType();
+//        if (type == String.class) {
+//            return jsonStr;
+//        }
+//        return JsonUtil.fromJson(jsonStr, getType());
+        // todo, make result in listener not as object, so no need to do class cast when using it
+        return JsonUtil.fromJson(jsonStr, clazz);
     }
 
-    private Type getType() {
-        Type superClass = getClass().getGenericSuperclass();
-        if (superClass instanceof Class) {
-            throw new RuntimeException("type parameter can't be found");
-        }
-        ParameterizedType type = (ParameterizedType) superClass;
-        return type.getActualTypeArguments()[0];
-    }
+//    private Type getType() {
+//        Type superClass = getClass().getGenericSuperclass();
+//        if (superClass instanceof Class) {
+//            throw new RuntimeException("type parameter can't be found");
+//        }
+//        ParameterizedType type = (ParameterizedType) superClass;
+//        return type.getActualTypeArguments()[0];
+//    }
 }

@@ -18,6 +18,7 @@ public class NetRequstParams {
     boolean isLoadCacheIfNetError;
     NetRequestListener listener;
     EmptyView emptyView;
+    Class jsonClass;
 
     public void recycle() {
 

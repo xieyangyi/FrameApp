@@ -137,6 +137,10 @@ public class NetRequest implements Request {
         return P.emptyView;
     }
 
+    public Class getJsonClass() {
+        return P.jsonClass;
+    }
+
     public void setStatus(Status status) {
         mStatus = status;
     }

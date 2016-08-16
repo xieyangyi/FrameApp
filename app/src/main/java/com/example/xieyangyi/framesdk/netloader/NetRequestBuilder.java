@@ -76,6 +76,11 @@ public class NetRequestBuilder {
         return this;
     }
 
+    public NetRequestBuilder json(Class jsonClass) {
+        P.jsonClass = jsonClass;
+        return this;
+    }
+
     // 创建
     public NetRequest build() {
         if (mRequest == null) {
