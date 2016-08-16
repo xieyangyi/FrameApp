@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.xieyangyi.framesdk.netloader.engine.Engine;
 
+import java.util.Map;
+
 /**
  * Created by xieyangyi on 16/8/9.
  */
@@ -14,6 +16,7 @@ public class NetRequest implements Request {
     private Context mContext;
     private NetRequstParams P;
     private Engine mEngine;
+    private Status mStatus;
 
     private NetRequest() {
     }
@@ -33,21 +36,31 @@ public class NetRequest implements Request {
         P = params;
         mContext = context;
         mEngine = new Engine(mContext);
+        mStatus = Status.PENDING;
     }
 
     @Override
     public void begin() {
-        mEngine.load(P);
+        mStatus = Status.RUNNING;
+        mEngine.load(this);
     }
 
     @Override
     public void pause() {
-
+        if (mStatus == Status.PAUSED) {
+            return;
+        }
+        clear();
+        mStatus = Status.PAUSED;
     }
 
     @Override
     public void clear() {
-
+        if (mStatus == Status.CLEARD) {
+            return;
+        }
+        recycle();
+        mStatus = Status.CLEARD;
     }
 
     @Override
@@ -59,32 +72,82 @@ public class NetRequest implements Request {
 
     @Override
     public boolean isPaused() {
-        return false;
+        return mStatus == Status.PAUSED;
     }
 
     @Override
     public boolean isRunning() {
-        return false;
+        return mStatus == Status.RUNNING;
     }
 
     @Override
     public boolean isComplete() {
-        return false;
-    }
-
-    @Override
-    public boolean isResourceSet() {
-        return false;
+        return mStatus == Status.COMPLETE;
     }
 
     @Override
     public boolean isCancelled() {
-        return false;
+        return mStatus == Status.CANCELLED;
     }
 
     @Override
     public boolean isFailed() {
-        return false;
+        return mStatus == Status.FAILED;
     }
 
+
+    // getter
+    public String getUrl() {
+        return P.url;
+    }
+
+    public Map<String, Object> getParams() {
+        return P.params;
+    }
+
+    public byte[] getBody() {
+        return P.body;
+    }
+
+    public String getTag() {
+        return P.tag;
+    }
+
+    public int getCacheTime() {
+        return P.cacheTime;
+    }
+
+    public Map<String, String> getHeader() {
+        return P.header;
+    }
+
+    public NetRequstParams.Type getType() {
+        return P.type;
+    }
+
+    public boolean isLoadCacheIfNetError() {
+        return P.isLoadCacheIfNetError;
+    }
+
+    public NetRequestListener getListener() {
+        return P.listener;
+    }
+
+    public EmptyView getEmptyView() {
+        return P.emptyView;
+    }
+
+    public void setStatus(Status status) {
+        mStatus = status;
+    }
+
+    public enum Status {
+        PENDING,
+        RUNNING,
+        COMPLETE,
+        FAILED,
+        CANCELLED,
+        CLEARD,
+        PAUSED
+    }
 }

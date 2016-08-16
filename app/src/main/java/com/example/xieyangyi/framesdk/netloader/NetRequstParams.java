@@ -15,12 +15,9 @@ public class NetRequstParams {
     int cacheTime;
     Map<String, String> header = new HashMap<>();
     Type type;
+    boolean isLoadCacheIfNetError;
     NetRequestListener listener;
     EmptyView emptyView;
-
-    public String getUrl() {
-        return url;
-    }
 
     public void recycle() {
 
@@ -37,6 +34,7 @@ public class NetRequstParams {
         }
         header = null;
         type = Type.GET;
+        isLoadCacheIfNetError = false;
         listener = null;
         emptyView = null;
 
