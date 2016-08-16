@@ -25,36 +25,22 @@ public class RequestExecutor  {
     }
 
     public void postError(NetRequest netRequest, Exception error) {
-        mExecutor.execute(new RequestRunnable(netRequest, null, error));
+        mExecutor.execute(new EngineRunnable(netRequest, null, error));
     }
 
     public void postResponse(NetRequest netRequest, Response response) {
-        mExecutor.execute(new RequestRunnable(netRequest, response, null));
+        try {
+            mExecutor.execute(new EngineRunnable(netRequest, response.body().string(), null));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void postCacheResponse(NetRequest netRequest, Response response, Exception error) {
-        mExecutor.execute(new RequestRunnable(netRequest, response, error));
-    }
-
-    private class RequestRunnable extends EngineRunnable<Response> {
-
-        public RequestRunnable(NetRequest request, Response response, Exception exception) {
-            super(request, response, exception);
-        }
-
-        @Override
-        protected String getResponseString(Response response) {
-            if (response == null) {
-                return null;
-            }
-
-            try {
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
+        try {
+            mExecutor.execute(new EngineRunnable(netRequest, response.body().string(), error));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
